@@ -1,0 +1,343 @@
+{% extends '/layout.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block body %}
+
+
+<script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+<!-- CUSTOM CSS -->
+<!-- Vendors CSS -->
+<link rel="stylesheet"
+    href="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/typeahead-js/typeahead.css') }}">
+
+<!-- Vendor -->
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/bs-stepper/bs-stepper.css') }}">
+<link rel="stylesheet"
+    href="{{ url_for('static', filename='assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/select2/select2.css') }}">
+<link rel="stylesheet"
+    href="{{ url_for('static', filename='assets/vendor/libs/@form-validation/form-validation.css') }}">
+
+<!-- Page CSS -->
+<!-- Page -->
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/css/pages/page-auth.css') }}">
+
+
+<!-- Custom CSS -->
+ <link rel="stylesheet" href="{{ url_for('static', filename='assets/sass/proceso_acopios/customProcesoAcopios.css') }}">
+
+<div class="authentication-wrapper authentication-cover">
+    <!-- Logo -->
+    <a href="index.html" class="app-brand auth-cover-brand gap-2">
+        <span class="app-brand-logo demo">
+            <img src="https://res.cloudinary.com/dxtlbsa62/image/upload/v1717962322/Verdies/srx3xflk0atk71jzrmdq.png"
+              alt="" width="70">
+        </span>
+        <span style="color:#384551;" class="app-brand-text demo menu-text fw-bold ms-2 span-firstWord">Verd<span
+            style="color:#7ed957; font-weight: bold;" class="span-enphasisWord">IES</span></span>
+    </a>
+    <!-- /Logo -->
+    <div class="authentication-inner row m-0">
+
+
+        <!--  Multi Steps Registration -->
+        <div class="d-flex col-lg-12 align-items-center justify-content-center authentication-bg p-5">
+            <div class="w-px-700">
+                <div id="multiStepsValidation" class="bs-stepper border-none shadow-none mt-5">
+                    <div class="bs-stepper-header border-none pt-12 px-0">
+                        <div class="step" data-target="#accountDetailsValidation">
+                            <button type="button" class="step-trigger">
+                                <span class="bs-stepper-circle"><i class="bx bx-qr"></i></span>
+                                <span class="bs-stepper-label">
+                                    <span class="bs-stepper-title">Escanear código QR</span>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="line">
+                            <i class="bx bx-chevron-right"></i>
+                        </div>
+                        <div class="step" data-target="#personalInfoValidation">
+                            <button type="button" class="step-trigger">
+                                <span class="bs-stepper-circle"><i class="bx bx-math"></i></span>
+                                <span class="bs-stepper-label">
+                                    <span class="bs-stepper-title">Conteo de residuos</span>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="line">
+                            <i class="bx bx-chevron-right"></i>
+                        </div>
+                        <div class="step" data-target="#billingLinksValidation">
+                            <button type="button" class="step-trigger">
+                                <span class="bs-stepper-circle"><i class="bx bx-gift"></i></span>
+                                <span class="bs-stepper-label">
+                                    <span class="bs-stepper-title">Entrega de puntos</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bs-stepper-content px-0">
+                        <form id="multiStepsForm" onsubmit="return false">
+                            <!-- Account Details -->
+                            <div id="accountDetailsValidation" class="content">
+                                <div class="content-header mb-6">
+                                    <h4 class="mb-0">Ingresa a la aplicación móvil de VerdIES y escanea el código QR
+                                    </h4>
+                                </div>
+                                <div class="container-img d-flex justify-content-center">
+                                    <img src="{{ qr }}" class="" alt="" style="max-width: 40%;">
+                                </div>
+                                <div class="row g-6">
+                                    <div class="col-12 d-flex justify-content-between">
+                                        <button class="btn btn-label-secondary btn-prev" disabled=""> <i
+                                                class="bx bx-left-arrow-alt bx-sm ms-sm-n2 me-sm-2"></i>
+                                            <span class="align-middle d-sm-inline-block d-none"></span>
+                                        </button>
+                                        <button class="btn btn-primary btn-next"> <span
+                                                class="align-middle d-sm-inline-block d-none me-sm-2 me-0">Siguiente</span>
+                                            <i class="bx bx-right-arrow-alt bx-sm me-sm-n2"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Personal Info -->
+                            <div id="personalInfoValidation" class="content">
+                                <div class="content-header mb-6">
+                                    <h4 class="mb-0">Introduce los residuos en el centro de acopio</h4>
+                                </div>
+                                <div class="row mt-5 d-flex justify-content-center align-items-center">                                        
+                                        <div class="col-6 col-md-4">
+                                            <img class="mx-auto d-block" src="{{ url_for('static', filename='/assets/img/clasificacion/aluminio.png') }}" style="max-width: 70%;" alt="">
+                                            <div class="" id="aluminio">
+                                                <label style="font-weight: 900;" class="text-center">Aluminio</label>
+                                                <input class="form-control" type="number" placeholder="0" name="aluminio" id="aluminio-input" required />
+                                            </div>
+                                        </div>                                            
+                                    <div class="col-6 col-md-4">
+                                        <img class="mx-auto d-block" src="{{ url_for('static', filename='/assets/img/clasificacion/botellas_plastico.png') }}" style="max-width: 70%;" alt="">
+                                        <div class="input-style-1" id="botellasPlasticas">
+                                            <label style="font-weight: 900;" class="text-center">Botellas plásticas</label>
+                                            <input class="form-control" type="number" placeholder="0" name="botellasPlasticas"
+                                                id="botellasPlasticas-input" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <img class="mx-auto d-block" src="{{ url_for('static', filename='/assets/img/clasificacion/tapas_botellas.png') }}" style="max-width: 70%;" alt="">
+                                        <div class="input-style-1" id="tapasPlasticas">
+                                            <label style="font-weight: 900;" class="text-center">Tapas plásticas</label>
+                                            <input class="form-control" type="number" placeholder="0" name="tapasPlasticas"
+                                                id="tapasPlasticas-input" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <img class="mx-auto d-block" src="{{ url_for('static', filename='/assets/img/clasificacion/vidrio.png') }}" style="max-width: 70%;" alt="">
+                                        <div class="input-style-1" id="vidrio">
+                                            <label style="font-weight: 900;" class="text-center">Vidrio</label>
+                                            <input class="form-control" type="number" placeholder="0" name="vidrio" id="vidrio-input"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <img class="mx-auto d-block" src="{{ url_for('static', filename='/assets/img/clasificacion/lamparas.png') }}" style="max-width: 70%;" alt="">
+                                        <div class="input-style-1" id="luminarias">
+                                            <label style="font-weight: 900;" class="text-center">Luminarias</label>
+                                            <input class="form-control" type="number" placeholder="0" name="luminarias"
+                                                id="luminarias-input" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <img class="mx-auto d-block" src="{{ url_for('static', filename='/assets/img/clasificacion/llantas.png') }}" style="max-width: 70%;" alt="">
+                                        <div class="input-style-1" id="llantas">
+                                            <label style="font-weight: 900;" class="text-center">Llantas</label>
+                                            <input class="form-control" type="number" placeholder="0" name="llantas" id="llantas-input"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <img class="mx-auto d-block" src="{{ url_for('static', filename='/assets/img/clasificacion/papel_carton.png') }}" style="max-width: 70%;" alt="">
+                                        <div class="input-style-1" id="papelYCarton">
+                                            <label style="font-weight: 900;" class="text-center">Papel y cartón</label>
+                                            <input class="form-control" type="number" placeholder="0" name="papelYCarton"
+                                                id="papelYCarton-input" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <img class="mx-auto d-block" src="{{ url_for('static', filename='/assets/img/clasificacion/bolsas_plasticas.png') }}" style="max-width: 70%;" alt="">
+                                        <div class="input-style-1" id="otrosPlasticos">
+                                            <label style="font-weight: 900;" class="text-center">Otros plásticos</label>
+                                            <input class="form-control" type="number" placeholder="0" name="otrosPlasticos"
+                                                id="otrosPlasticos-input" required />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                    <div class="d-grid gap-2 col-lg-12 mx-auto mt-5">
+                                        <a id="" href="#" class="btn btn-success">Finalizar</a>
+                                        <a id="maps-link" href="#" class="btn btn-danger">Cancelar</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Billing Links -->
+                            <div id="billingLinksValidation" class="content">
+                                <div class="content-header mb-6">
+                                    <h4 class="mb-0">Select Plan</h4>
+                                    <p class="mb-0">Select plan as per your requirement</p>
+                                </div>
+                                <!-- Custom plan options -->
+                                <div class="row gap-md-0 gap-4 mb-12">
+                                    <div class="col-md">
+                                        <div class="form-check custom-option custom-option-icon">
+                                            <label class="form-check-label custom-option-content" for="basicOption">
+                                                <span class="custom-option-body">
+                                                    <span class="d-block mb-2 h5">Basic</span>
+                                                    <span>A simple start for start ups & Students</span>
+                                                    <span class="d-flex justify-content-center mt-2">
+                                                        <sup class="text-primary h6 fw-normal pt-2 mb-0">$</sup>
+                                                        <span class="fw-medium h3 text-primary mb-0">0</span>
+                                                        <sub class="h6 fw-normal mt-3 mb-0 text-muted">/month</sub>
+                                                    </span>
+                                                </span>
+                                                <input name="customRadioIcon" class="form-check-input" type="radio"
+                                                    value="" id="basicOption">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-check custom-option custom-option-icon">
+                                            <label class="form-check-label custom-option-content" for="standardOption">
+                                                <span class="custom-option-body">
+                                                    <span class="d-block mb-2 h5">Standard</span>
+                                                    <span>For small to medium businesses</span>
+                                                    <span class="d-flex justify-content-center mt-2">
+                                                        <sup class="text-primary h6 fw-normal pt-2 mb-0">$</sup>
+                                                        <span class="fw-medium h3 text-primary mb-0">99</span>
+                                                        <sub class="h6 fw-normal mt-3 mb-0 text-muted">/month</sub>
+                                                    </span>
+                                                </span>
+                                                <input name="customRadioIcon" class="form-check-input" type="radio"
+                                                    value="" id="standardOption" checked="">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-check custom-option custom-option-icon">
+                                            <label class="form-check-label custom-option-content"
+                                                for="enterpriseOption">
+                                                <span class="custom-option-body">
+                                                    <span class="d-block mb-2 h5">Enterprise</span>
+                                                    <span>Solution for enterprise & organizations</span>
+                                                    <span class="d-flex justify-content-center mt-2">
+                                                        <sup class="text-primary h6 fw-normal pt-2 mb-0">$</sup>
+                                                        <span class="fw-medium h3 text-primary mb-0">499</span>
+                                                        <sub class="h6 fw-normal mt-3 mb-0 text-muted">/year</sub>
+                                                    </span>
+                                                </span>
+                                                <input name="customRadioIcon" class="form-check-input" type="radio"
+                                                    value="" id="enterpriseOption">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/ Custom plan options -->
+                                <div class="content-header mb-6">
+                                    <h4 class="mb-0">Payment Information</h4>
+                                    <p class="mb-0">Enter your card information</p>
+                                </div>
+                                <!-- Credit Card Details -->
+                                <div class="row g-6">
+                                    <div class="col-md-12">
+                                        <label class="form-label w-100" for="multiStepsCard">Card Number</label>
+                                        <div class="input-group input-group-merge">
+                                            <input id="multiStepsCard" class="form-control multi-steps-card"
+                                                name="multiStepsCard" type="text" placeholder="1356 3215 6548 7898"
+                                                aria-describedby="multiStepsCardImg">
+                                            <span class="input-group-text cursor-pointer" id="multiStepsCardImg"><span
+                                                    class="card-type"></span></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label class="form-label" for="multiStepsName">Name On Card</label>
+                                        <input type="text" id="multiStepsName" class="form-control"
+                                            name="multiStepsName" placeholder="John Doe">
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <label class="form-label" for="multiStepsExDate">Expiry Date</label>
+                                        <input type="text" id="multiStepsExDate"
+                                            class="form-control multi-steps-exp-date" name="multiStepsExDate"
+                                            placeholder="MM/YY">
+                                    </div>
+                                    <div class="col-6 col-md-3">
+                                        <label class="form-label" for="multiStepsCvv">CVV Code</label>
+                                        <div class="input-group input-group-merge">
+                                            <input type="text" id="multiStepsCvv" class="form-control multi-steps-cvv"
+                                                name="multiStepsCvv" maxlength="3" placeholder="654">
+                                            <span class="input-group-text cursor-pointer" id="multiStepsCvvHelp"><i
+                                                    class="bx bx-help-circle text-muted" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="Card Verification Value"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-between">
+                                        <button class="btn btn-label-secondary btn-prev"> <i
+                                                class="bx bx-left-arrow-alt bx-sm ms-sm-n2 me-sm-2"></i>
+                                            <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                                        </button>
+                                        <button type="submit"
+                                            class="btn btn-success btn-next btn-submit">Submit</button>
+                                    </div>
+                                </div>
+                                <!--/ Credit Card Details -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / Multi Steps Registration -->
+    </div>
+</div>
+
+
+
+
+<!-- Custom JS -->
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+
+<script src="{{ url_for('static', filename='assets/vendor/libs/jquery/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/popper/popper.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/js/bootstrap.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/hammer/hammer.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/i18n/i18n.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/js/menu.js') }}"></script>
+
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+<script src="{{ url_for('static', filename='assets/vendor/libs/cleavejs/cleave.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/bs-stepper/bs-stepper.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/select2/select2.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/@form-validation/popular.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/@form-validation/bootstrap5.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/@form-validation/auto-focus.js') }}"></script>
+
+<!-- Main JS -->
+<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+<!-- Page JS -->
+<script src="{{ url_for('static', filename='assets/js/pages-auth-multisteps.js') }}"></script>
+
+<script>
+    // Conectarse al servidor Socket.IO
+    var socket = io.connect('http://127.0.0.1:8002');
+
+    // Escuchar el evento 'redireccion'
+    socket.on('redireccion', function(data) {
+        // Redirigir a la URL proporcionada
+        window.location.href = data.url;
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+.step.active .bs-stepper-label .bs-stepper-title {
+  color: #7ed957 !important;
+}
+
+.bs-stepper .step.active .bs-stepper-circle {
+  background-color: #7ed957 !important;
+}
+
+.btn:hover {
+  color: #7ed957 !important;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #7ed957;
+  border-color: #7ed957;
+}
+
+.btn-primary:hover {
+  color: #fff !important;
+  background-color: #7ed957 !important;
+  border-color: #7ed957 !important;
+}
+
+a.hover {
+  color: #7ed957;
+}/*# sourceMappingURL=customProcesoAcopios.css.map */

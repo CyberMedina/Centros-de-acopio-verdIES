@@ -1,0 +1,210 @@
+{% extends '/layout.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block body %}
+
+<script src="{{ url_for('static', filename='assets/vendor/libs/socketio/socketio.js') }}"></script>
+
+
+
+
+<!-- custom CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/sass/custom_layouts.css') }}">
+<link rel="stylesheet"
+  href="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/mapbox-gl/mapbox-gl.css') }}">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.4.5/css/swiper.css">
+
+<!-- Page CSS -->
+<link rel="stylesheet"
+  href="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/typeahead-js/typeahead.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='/assets/vendor/libs/select2/select2.css') }}">
+<link rel="stylesheet"
+  href="{{ url_for('static', filename='assets/vendor/libs/%40form-validation/form-validation.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/bs-stepper/bs-stepper.css') }}">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/css/pages/page-auth.css') }}">
+
+
+
+{% block customCSS %}
+
+{% endblock %}
+
+
+<!-- Create App Modal -->
+<div class="modal fade" id="createApp" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-simple modal-upgrade-plan">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- App Wizard -->
+        <div id="wizard-create-app" class="bs-stepper vertical mt-2 shadow-none">
+          <div class="bs-stepper-header border-0 p-1 pb-0" hidden>
+            <div class="step" data-target="#details">
+              <button type="button" class="step-trigger">
+                <span class="bs-stepper-circle"><i class="bx bx-home"></i></span>
+                <span class="bs-stepper-label">
+                  <span class="bs-stepper-title text-uppercase">Details</span>
+                  <span class="bs-stepper-subtitle">Enter Details</span>
+                </span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#frameworks">
+              <button type="button" class="step-trigger">
+                <span class="bs-stepper-circle"><i class="bx bx-box"></i></span>
+                <span class="bs-stepper-label">
+                  <span class="bs-stepper-title text-uppercase">Frameworks</span>
+                  <span class="bs-stepper-subtitle">Select Framework</span>
+                </span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#database">
+              <button type="button" class="step-trigger">
+                <span class="bs-stepper-circle"><i class="bx bx-data"></i></span>
+                <span class="bs-stepper-label">
+                  <span class="bs-stepper-title text-uppercase">Database</span>
+                  <span class="bs-stepper-subtitle">Select Database</span>
+                </span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#billing">
+              <button type="button" class="step-trigger">
+                <span class="bs-stepper-circle"><i class="bx bx-credit-card"></i></span>
+                <span class="bs-stepper-label">
+                  <span class="bs-stepper-title text-uppercase">Billing</span>
+                  <span class="bs-stepper-subtitle">Payment Details</span>
+                </span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#submit">
+              <button type="button" class="step-trigger">
+                <span class="bs-stepper-circle"><i class="bx bx-check"></i></span>
+                <span class="bs-stepper-label">
+                  <span class="bs-stepper-title text-uppercase">Submit</span>
+                  <span class="bs-stepper-subtitle">Submit</span>
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="bs-stepper-content p-1 pb-0">
+
+          </div>
+        </div>
+      </div>
+      <!--/ App Wizard -->
+    </div>
+  </div>
+</div>
+<!--/ Create App Modal -->
+
+<!-- Upcoming Webinar -->
+<div class="col-md-12 col-xxl-4">
+  <div class="card h-100">
+    <div class="card-body">
+
+
+      
+
+
+      <div class="app-brand demo d-flex justify-content-center">
+        <a href="index.html" class="app-brand-link">
+          <span class="app-brand-logo demo">
+            <img src="https://res.cloudinary.com/dxtlbsa62/image/upload/v1717962322/Verdies/srx3xflk0atk71jzrmdq.png"
+              alt="" width="70">
+          </span>
+          <span style="color:#384551;" class="app-brand-text demo menu-text fw-bold ms-2 span-firstWord">Verd<span
+              style="color:#7ed957; font-weight: bold;" class="span-enphasisWord">IES</span></span>
+        </a>
+      </div>
+      <div class="detalleAcopio text-center">
+        <img class="img-fluid" src="{{ url_for('static', filename='assets/img/illustrations/centros_acopios.png') }}"
+          alt="">
+        <h4 class="mb-5 mt-5">{{ datos_acopio.centroacopios.nombre }}</h4>
+        <img src="{{ qr }}" class="" alt="" hidden>
+      </div>
+      <!--  <div class="row mb-4 g-3">
+          <div class="col-6">
+            <div class="d-flex align-items-center">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-calendar bx-lg"></i></span>
+              </div>
+              <div>
+                <h6 class="mb-0 text-nowrap">17 Nov 23</h6>
+                <small>Date</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-flex align-items-center">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-time-five bx-lg"></i></span>
+              </div>
+              <div>
+                <h6 class="mb-0 text-nowrap">32 minutes</h6>
+                <small>Duration</small>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      <div class="contenedor d-flex justify-content-center">
+        <div class="col-6 text-center">
+          <a href="/proceso_acopios" class="btn btn-primary w-100 d-grid">Iniciar</a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+<!--/ Upcoming Webinar -->
+
+
+<!-- / Content -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.4.5/js/swiper.min.js"></script>
+
+<!-- CORE JS -->
+<script src="{{ url_for('static', filename='assets/vendor/libs/jquery/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/popper/popper.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/js/bootstrap.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/hammer/hammer.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/i18n/i18n.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/js/menu.js') }}"></script>
+
+
+
+
+<!-- Vendors JS -->
+<script src="{{ url_for('static', filename='assets/vendor/libs/mapbox-gl/mapbox-gl.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/html5qr/html5qr.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/cleavejs/cleave.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/select2/select2.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/%40form-validation/popular.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/%40form-validation/bootstrap5.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/%40form-validation/auto-focus.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/libs/bs-stepper/bs-stepper.js') }}"></script>
+
+<!-- Page JS -->
+<script src="{{ url_for('static', filename='assets/js/pages-pricing.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/modal-create-app.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/modal-add-new-cc.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/modal-add-new-address.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/modal-edit-user.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/modal-enable-otp.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/modal-share-project.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/modal-two-factor-auth.js') }}"></script>
+
+
+
+
+
+{% endblock %}
