@@ -26,25 +26,23 @@
 
 
 <!-- Custom CSS -->
- <link rel="stylesheet" href="{{ url_for('static', filename='assets/sass/proceso_acopios/customProcesoAcopios.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/sass/proceso_acopios/customProcesoAcopios.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+<script src="{{ url_for('static', filename='assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/extended-ui-sweetalert2.js') }}"></script>
 
 <div class="authentication-wrapper authentication-cover">
     <!-- Logo -->
     <a href="index.html" class="app-brand auth-cover-brand gap-2">
         <span class="app-brand-logo demo">
-            <img src="https://res.cloudinary.com/dxtlbsa62/image/upload/v1717962322/Verdies/srx3xflk0atk71jzrmdq.png"
-              alt="" width="70">
+            <img src="{{ url_for('static', filename='assets/img/logo/VerdIESNormal.png') }}"
+                alt="Logo VerdIES" class="img-fluid" style="max-width: 120px; width: 100%; height: auto;">
         </span>
-        <span style="color:#384551;" class="app-brand-text demo menu-text fw-bold ms-2 span-firstWord">Verd<span
-            style="color:#7ed957; font-weight: bold;" class="span-enphasisWord">IES</span></span>
     </a>
     <!-- /Logo -->
     <div class="authentication-inner row m-0">
-
-
-        <!--  Multi Steps Registration -->
-        <div class="d-flex col-lg-12 align-items-center justify-content-center authentication-bg p-5">
-            <div class="w-px-700">
+        <div class="d-flex col-12 align-items-center justify-content-center authentication-bg p-sm-5 p-3">
+            <div class="w-100" style="max-width: 900px;">
                 <div id="multiStepsValidation" class="bs-stepper border-none shadow-none mt-5">
                     <div class="bs-stepper-header border-none pt-12 px-0">
                         <div class="step" data-target="#accountDetailsValidation">
@@ -106,74 +104,30 @@
                                 <div class="content-header mb-6">
                                     <h4 class="mb-0">Introduce los residuos en el centro de acopio</h4>
                                 </div>
-                                <div class="row mt-5 d-flex justify-content-center align-items-center">                                        
-                                        <div class="col-6 col-md-4">
-                                            <img class="mx-auto d-block" src="{{ url_for('static', filename='/assets/img/clasificacion/aluminio.png') }}" style="max-width: 70%;" alt="">
-                                            <div class="" id="aluminio">
-                                                <label style="font-weight: 900;" class="text-center">Aluminio</label>
-                                                <input class="form-control" type="number" placeholder="0" name="aluminio" id="aluminio-input" required />
-                                            </div>
-                                        </div>                                            
-                                    <div class="col-6 col-md-4">
-                                        <img class="mx-auto d-block" src="{{ url_for('static', filename='/assets/img/clasificacion/botellas_plastico.png') }}" style="max-width: 70%;" alt="">
-                                        <div class="input-style-1" id="botellasPlasticas">
-                                            <label style="font-weight: 900;" class="text-center">Botellas plásticas</label>
-                                            <input class="form-control" type="number" placeholder="0" name="botellasPlasticas"
-                                                id="botellasPlasticas-input" required />
+                                <div class="row mt-4 d-flex justify-content-center align-items-center">
+                                    {% for material in materiales %}
+                                    <div class="col-6 col-md-4 col-lg-2-4 mb-4">
+                                        <img class="mx-auto d-block"
+                                            src="{{ url_for('static', filename='/assets/img/clasificacion/' + material.imagen_url) }}"
+                                            style="max-width: 60%;" alt="{{ material.nombre }}">
+                                        <div class="input-style-1" id="{{ material.nombre|lower|replace(' ', '') }}">
+                                            <label style="font-weight: 900;" class="text-center">{{ material.nombre }}</label>
+                                            <input class="form-control" type="number" placeholder="0" 
+                                                name="{{ material.nombre|lower|replace(' ', '') }}" 
+                                                id="{{ material.nombre|lower|replace(' ', '') }}-input" required />
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-4">
-                                        <img class="mx-auto d-block" src="{{ url_for('static', filename='/assets/img/clasificacion/tapas_botellas.png') }}" style="max-width: 70%;" alt="">
-                                        <div class="input-style-1" id="tapasPlasticas">
-                                            <label style="font-weight: 900;" class="text-center">Tapas plásticas</label>
-                                            <input class="form-control" type="number" placeholder="0" name="tapasPlasticas"
-                                                id="tapasPlasticas-input" required />
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4">
-                                        <img class="mx-auto d-block" src="{{ url_for('static', filename='/assets/img/clasificacion/vidrio.png') }}" style="max-width: 70%;" alt="">
-                                        <div class="input-style-1" id="vidrio">
-                                            <label style="font-weight: 900;" class="text-center">Vidrio</label>
-                                            <input class="form-control" type="number" placeholder="0" name="vidrio" id="vidrio-input"
-                                                required />
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4">
-                                        <img class="mx-auto d-block" src="{{ url_for('static', filename='/assets/img/clasificacion/lamparas.png') }}" style="max-width: 70%;" alt="">
-                                        <div class="input-style-1" id="luminarias">
-                                            <label style="font-weight: 900;" class="text-center">Luminarias</label>
-                                            <input class="form-control" type="number" placeholder="0" name="luminarias"
-                                                id="luminarias-input" required />
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4">
-                                        <img class="mx-auto d-block" src="{{ url_for('static', filename='/assets/img/clasificacion/llantas.png') }}" style="max-width: 70%;" alt="">
-                                        <div class="input-style-1" id="llantas">
-                                            <label style="font-weight: 900;" class="text-center">Llantas</label>
-                                            <input class="form-control" type="number" placeholder="0" name="llantas" id="llantas-input"
-                                                required />
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4">
-                                        <img class="mx-auto d-block" src="{{ url_for('static', filename='/assets/img/clasificacion/papel_carton.png') }}" style="max-width: 70%;" alt="">
-                                        <div class="input-style-1" id="papelYCarton">
-                                            <label style="font-weight: 900;" class="text-center">Papel y cartón</label>
-                                            <input class="form-control" type="number" placeholder="0" name="papelYCarton"
-                                                id="papelYCarton-input" required />
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4">
-                                        <img class="mx-auto d-block" src="{{ url_for('static', filename='/assets/img/clasificacion/bolsas_plasticas.png') }}" style="max-width: 70%;" alt="">
-                                        <div class="input-style-1" id="otrosPlasticos">
-                                            <label style="font-weight: 900;" class="text-center">Otros plásticos</label>
-                                            <input class="form-control" type="number" placeholder="0" name="otrosPlasticos"
-                                                id="otrosPlasticos-input" required />
-                                        </div>
-                                    </div>
-                                    <!-- end col -->
-                                    <div class="d-grid gap-2 col-lg-12 mx-auto mt-5">
-                                        <a id="" href="#" class="btn btn-success">Finalizar</a>
-                                        <a id="maps-link" href="#" class="btn btn-danger">Cancelar</a>
+                                    {% endfor %}
+                                </div>
+                                <div class="row g-6">
+                                    <div class="col-12 d-flex justify-content-between">
+                                        <button class="btn btn-label-secondary btn-prev"> <i
+                                                class="bx bx-left-arrow-alt bx-sm ms-sm-n2 me-sm-2"></i>
+                                            <span class="align-middle d-sm-inline-block d-none"></span>
+                                        </button>
+                                        <button class="btn btn-primary btn-next"> <span
+                                                class="align-middle d-sm-inline-block d-none me-sm-2 me-0">Siguiente</span>
+                                            <i class="bx bx-right-arrow-alt bx-sm me-sm-n2"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -292,7 +246,6 @@
                 </div>
             </div>
         </div>
-        <!-- / Multi Steps Registration -->
     </div>
 </div>
 
@@ -334,10 +287,96 @@
     var socket = io.connect('http://127.0.0.1:8002');
 
     // Escuchar el evento 'redireccion'
-    socket.on('redireccion', function(data) {
+    socket.on('redireccion', function (data) {
         // Redirigir a la URL proporcionada
         window.location.href = data.url;
     });
 </script>
+
+<script>
+
+    socket.on('deteccion_residuo', function (data) {
+
+        console.log(data)
+
+        var data = JSON.parse(data);
+
+        var nombreClasficacion = data.nombre;
+        var cantidadProducto = data.cantidad;
+
+
+        var t;
+        Swal.fire({
+            title: 'El producto ' + nombreClasficacion,
+            html: "Con la cantidad de " + cantidadProducto,
+            imageUrl: "https://www.theharvardshop.com/cdn/shop/files/CS50-Rubber-Duck-CS50-199927230.jpg?v=1720621919&width=1920",
+            imageWidth: 200,
+            imageHeight: 200,
+            imageAlt: "Custom image",
+            timer: 2e3,
+            customClass: { confirmButton: "btn btn-primary" },
+            buttonsStyling: !1,
+            willOpen: function () {
+                /*Swal.showLoading(),
+                    (t = setInterval(function () {
+                        Swal.getHtmlContainer().querySelector("strong").textContent =
+                            Swal.getTimerLeft();
+                    }, 100));
+                    */
+            },
+            willClose: function () {
+                clearInterval(t);
+            },
+        }).then(function (t) {
+            t.dismiss === Swal.DismissReason.timer &&
+                console.log("I was closed by the timer");
+        });
+
+
+
+
+    });
+
+
+
+
+</script>
+
+<style>
+    .col-lg-2-4 {
+        @media (min-width: 992px) {
+            flex: 0 0 20%;
+            max-width: 20%;
+        }
+    }
+
+    /* Ajustes responsivos adicionales */
+    @media (max-width: 991px) {
+        .authentication-bg {
+            padding: 1rem !important;
+        }
+        
+        .bs-stepper-header {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .bs-stepper-header .step {
+            margin-bottom: 1rem;
+        }
+
+        .bs-stepper-title {
+            font-size: 0.9rem;
+        }
+    }
+
+    /* Ajustes para tablets */
+    @media (min-width: 768px) and (max-width: 991px) {
+        .col-md-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+    }
+</style>
 
 {% endblock %}

@@ -25,3 +25,15 @@
 a.hover{
     color: $primary-color;
 }
+
+.bs-stepper .step.crossed .step-trigger .bs-stepper-circle {
+    background-color: rgba(105, 108, 255, .16) !important;
+    color: $primary-color !important;
+}
+
+.auth-cover-brand {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: 5rem;
+    inset-inline-start: 5rem;
+}

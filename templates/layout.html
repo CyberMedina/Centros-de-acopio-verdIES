@@ -39,7 +39,7 @@
     <!-- End Google Tag Manager -->
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='/assets/img/favicon/favicon.ico') }}">
+    <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/drmoodyde/image/upload/v1729335444/iso_logo_mqaych.png">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,6 +69,15 @@
 <!-- Template customizer & Theme config -->
 <script src="{{ url_for('static', filename='assets/vendor/js/template-customizer.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/config.js') }}"></script>
+
+
+<style>
+  .popup-timer-arrow {
+    display: none !important;
+}
+
+</style>
+
 
 <!-- custom CSS -->
  {% block customCSS %}{% endblock %}
@@ -141,6 +150,25 @@
 
 <!-- Page JS -->
 <script src="{{ url_for('static', filename='assets/js/dashboards-analytics.js') }}"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Intenta remover la fila de la campaña
+    var campaignRows = document.querySelectorAll('.Row.om-row');
+    campaignRows.forEach(function(row) {
+      row.remove();
+    });
+    
+    // En caso de que se reinyecte, usa un intervalo para chequear periódicamente
+    setInterval(function(){
+      var campaignRows = document.querySelectorAll('.Row.om-row');
+      campaignRows.forEach(function(row) {
+        row.remove();
+      });
+    }, 1000);
+  });
+</script>
+
 
 </body>
 

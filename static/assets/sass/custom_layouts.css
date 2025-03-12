@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/* Cambios LUPE */
 #loader {
   position: fixed;
   top: 0;
@@ -28,10 +29,17 @@
 }
 .btn-primary {
   color: #fff;
-  background-color: #7ed957;
-  border-color: #7ed957;
+  background-color: #00a5a0;
+  border-color: #00a5a0;
   box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
   font-size: 25px;
+}
+
+.btn-primary:hover {
+  color: #fff !important;
+  background-color: #00a5a0 !important;
+  border-color: #00a5a0 !important;
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
 }
 
 .app-brand-text.demo {
@@ -56,8 +64,4 @@
 
 .contenedor {
   margin-top: 5rem;
-}
-
-.step.active .bs-stepper-label .bs-stepper-title {
-  color: #7ed957 !important;
 }/*# sourceMappingURL=custom_layouts.css.map */

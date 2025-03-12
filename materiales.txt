@@ -1,0 +1,1 @@
+id: 4 nombre: metales, id: 1 nombre: plasticos pet, id: 2 nombre: papel y cartón, id: 13 nombre: plastico pp, id: 3 nombre: vidrio
