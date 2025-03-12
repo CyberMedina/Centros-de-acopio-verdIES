@@ -1,4 +1,4 @@
-from models.api import *
+from app.models.api import *
 
 tipos_de_objetos = obtener_clasificacion_residuos()
 
