@@ -1,0 +1,39 @@
+.step.active .bs-stepper-label .bs-stepper-title {
+    color: $primary-color !important;
+}
+
+.bs-stepper .step.active .bs-stepper-circle {
+    background-color: $primary-color !important;
+}
+
+.btn:hover {
+    color: $primary-color !important;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: $primary-color;
+    border-color: $primary-color;
+}
+
+.btn-primary:hover {
+    color: #fff !important;
+    background-color: $primary-color !important;
+    border-color: $primary-color !important;
+}
+
+a.hover{
+    color: $primary-color;
+}
+
+.bs-stepper .step.crossed .step-trigger .bs-stepper-circle {
+    background-color: rgba(105, 108, 255, .16) !important;
+    color: $primary-color !important;
+}
+
+.auth-cover-brand {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: 5rem;
+    inset-inline-start: 5rem;
+}
