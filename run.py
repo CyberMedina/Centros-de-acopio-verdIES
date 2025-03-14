@@ -1,6 +1,9 @@
 from dotenv import load_dotenv
 import os
 from app import create_app, socketio
+import app.yolo.fix_warnings
+import app.yolo.fix_yolo
+# Resto de tus importaciones
 
 # Cargar variables de entorno
 load_dotenv()
@@ -24,7 +27,7 @@ def handle_redireccion(data):
 
 @socketio.on('deteccion_residuo')
 def handle_deteccion_residuo(data):
-    # Reenviar el evento de detección de residuo a todos los clientes
+    print("Recibido evento deteccion_residuo:", data)  # Debug
     socketio.emit('deteccion_residuo', data)
 
 if __name__ == '__main__':

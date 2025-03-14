@@ -1,11 +1,12 @@
 import base64
 import json as json_lib
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify, session, current_app
 from flask_cors import cross_origin
 from app.models.api import obtener_detalle_centro_acopio
 from app.prompts import prompt_clasificador
 from openai import OpenAI
 import os
+from .. import socketio  # Importar socketio desde la instancia de la app
 
 bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -59,24 +60,45 @@ def test_envio():
     # Obtener clasificación
     try:
         json_response = enviar_imagen_a_modelo(image_data)
-        print(json_response)  # Asegúrate de que esto imprime un diccionario
+        print("Respuesta del modelo:", json_response)  # Debug
 
         if 'id' in json_response:
+            # Obtener la URL de la imagen correspondiente al ID
+            imagen_url = obtener_imagen_por_id(json_response['id'])
+            
             residuos_clasificados_temp = {
                 'id': json_response['id'],
                 'nombre': json_response['nombre'],
-                'img_url': 'url',  # Aquí se agregará la función para obtener la imagen de esa categoría luego
+                'img_url': imagen_url,
                 'cantidad': json_response['cantidad']
             }
             residuos_clasificados.append(residuos_clasificados_temp)
+            
+            # Emitir el evento socket con los datos
+            print("Emitiendo evento socket con:", residuos_clasificados_temp)  # Debug
+            socketio.emit('deteccion_residuo', json_lib.dumps(residuos_clasificados_temp))
+            
         elif 'error' in json_response:
             residuos_clasificados_temp = json_response
 
-        # La emisión del evento de socket se manejará en el archivo run.py
         return jsonify(residuos_clasificados_temp), 200
     except Exception as e:
         print(f"Error al enviar imagen: {e}")
         return jsonify({"error": "Hubo un problema al clasificar la imagen"}), 500
+
+def obtener_imagen_por_id(id):
+    # Mapeo de IDs a nombres de archivos de imagen
+    imagenes = {
+        1: "aluminio.png",
+        2: "botellas_plastico.png",
+        3: "tapas_botellas.png",
+        4: "vidrio.png",
+        5: "lamparas.png",
+        6: "llantas.png",
+        7: "papel_carton.png"
+    }
+    
+    return imagenes.get(id, "default.png")
 
 def enviar_imagen_a_modelo(base64_image):
     response = client.chat.completions.create(

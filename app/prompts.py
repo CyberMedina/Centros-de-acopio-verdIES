@@ -6,7 +6,12 @@ tipos_de_objetos = obtener_clasificacion_residuos()
 resultado = "No se pudieron obtener las categorías"
 
 # Verificamos el tipo de datos que recibimos
-if isinstance(tipos_de_objetos, dict) and 'Categorias' in tipos_de_objetos:
+if isinstance(tipos_de_objetos, dict) and 'materiales_aceptados' in tipos_de_objetos:
+    # Si es un diccionario con la clave 'materiales_aceptados'
+    categorias = tipos_de_objetos['materiales_aceptados']
+    resultado = ", ".join([f"id: {categoria['id']} nombre: {categoria['nombre'].lower()}" for categoria in categorias])
+    print(resultado)
+elif isinstance(tipos_de_objetos, dict) and 'Categorias' in tipos_de_objetos:
     # Si es un diccionario con la clave 'Categorias'
     categorias = tipos_de_objetos['Categorias']
     resultado = ", ".join([f"id: {categoria['id']} nombre: {categoria['nombre'].lower()}" for categoria in categorias])
@@ -38,3 +43,4 @@ Devuelve solo la clasificación en JSON unicamente genera la información del ob
     "cantidad": 
 }}
 """
+print(prompt_clasificador)

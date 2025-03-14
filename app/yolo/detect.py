@@ -7,6 +7,10 @@ from pathlib import Path
 import pathlib
 import yaml
 import torch
+import warnings
+
+warnings.filterwarnings("ignore", category=FutureWarning, module="torch.cuda.amp")
+warnings.filterwarnings("ignore", category=UserWarning, message="torch.cuda.amp.autocast")
 
 temp = pathlib.PosixPath
 pathlib.PosixPath = pathlib.WindowsPath

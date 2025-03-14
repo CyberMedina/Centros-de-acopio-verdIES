@@ -6,6 +6,7 @@ import warnings
 import requests
 
 warnings.filterwarnings("ignore", category=FutureWarning, module="torch")
+warnings.filterwarnings("ignore", category=UserWarning, message="torch.cuda.amp.autocast")
 warnings.filterwarnings("once")
 
 class YOLODetector:
@@ -46,7 +47,7 @@ class YOLODetector:
         self.img_count += 1
         
         print("Imagen enviada a la API")
-        url = 'http://127.0.0.1:8002/test_envio'
+        url = 'http://127.0.0.1:8002/api/test_envio'
         data = {'img': base64.b64encode(img_encoded.tobytes()).decode('utf-8')}
         response = requests.post(url, json=data)
         print(f"Respuesta de la API: {response.status_code}")
