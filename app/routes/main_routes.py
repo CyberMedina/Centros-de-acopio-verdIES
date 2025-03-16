@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, session, jsonify, current_app
 from app.models.api import obtener_detalle_centro_acopio, obtener_clasificacion_residuos
 from app.models.creacion_qr import creacion_qr_json
-from app.info_centro_acopio import materiales_aceptados
+from info_centro_acopio import materiales_aceptados
 from flask_cors import cross_origin
 from flask_socketio import emit
 import os

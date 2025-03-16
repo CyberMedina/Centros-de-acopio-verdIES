@@ -3,7 +3,7 @@ import json as json_lib
 from flask import Blueprint, request, jsonify, session, current_app
 from flask_cors import cross_origin
 from app.models.api import obtener_detalle_centro_acopio
-from app.prompts import prompt_clasificador
+from app.prompts import generar_prompt_clasificador
 from openai import OpenAI
 import os
 from .. import socketio  # Importar socketio desde la instancia de la app
@@ -62,6 +62,13 @@ def test_envio():
         json_response = enviar_imagen_a_modelo(image_data)
         print("Respuesta del modelo:", json_response)  # Debug
 
+        # Si la respuesta es una lista, tomar el primer elemento
+        if isinstance(json_response, list):
+            if len(json_response) > 0:
+                json_response = json_response[0]
+            else:
+                return jsonify({"error": "Respuesta vacía del modelo"}), 500
+
         if 'id' in json_response:
             # Obtener la URL de la imagen correspondiente al ID
             imagen_url = obtener_imagen_por_id(json_response['id'])
@@ -85,7 +92,7 @@ def test_envio():
     except Exception as e:
         print(f"Error al enviar imagen: {e}")
         return jsonify({"error": "Hubo un problema al clasificar la imagen"}), 500
-
+    
 def obtener_imagen_por_id(id):
     # Mapeo de IDs a nombres de archivos de imagen
     imagenes = {
@@ -101,6 +108,7 @@ def obtener_imagen_por_id(id):
     return imagenes.get(id, "default.png")
 
 def enviar_imagen_a_modelo(base64_image):
+    prompt_clasificador = generar_prompt_clasificador()
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[

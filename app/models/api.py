@@ -1,6 +1,6 @@
 import requests
 from flask import jsonify
-from app.info_centro_acopio import *
+from info_centro_acopio import *
 
 def obtener_detalle_centro_acopio(id):
 
