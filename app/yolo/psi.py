@@ -17,7 +17,7 @@ class YOLODetector:
         self.last_detection = None
         self.detection_threshold = 0.1
         self.absence_threshold = 1.5
-        self.confidence_threshold = 0.5
+        self.confidence_threshold = 1
         self.MAX_COUNT = 20
         self.img_count = 1
         
@@ -27,7 +27,7 @@ class YOLODetector:
         except Exception as e:
             print("Error al cargar el modelo:", e)
             
-    def iniciar_camara(self, camera_index=1):
+    def iniciar_camara(self, camera_index=2):
         self.cap = cv2.VideoCapture(camera_index)
         
     def detener_camara(self):
@@ -82,11 +82,17 @@ class YOLODetector:
         if not ret:
             return None, None
 
+        # Guardamos una copia de la imagen original sin anotaciones.
+        original_frame = frame.copy()
+
         results = self.model(frame)
         detections = results.xyxy[0]
         
+        # Generamos la imagen con etiquetas para mostrarla en pantalla.
         results.render()
-        return frame, len(detections) > 0
+        
+        # Retornamos la copia original sin las etiquetas para enviarla a la API.
+        return original_frame, len(detections) > 0
 
     def ejecutar_deteccion(self):
         if not hasattr(self, 'cap'):

@@ -19,3 +19,8 @@ qrcode==8.0
 requests==2.32.3
 urllib3==2.2.3
 Werkzeug==3.0.4
+torch>=1.7.0
+torchvision>=0.8.1
+opencv-python>=4.1.2
+numpy>=1.18.5
+ultralytics 
