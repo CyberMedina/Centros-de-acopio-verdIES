@@ -28,7 +28,8 @@ Prototipo de un centro de acopio inteligente para la aplicación **VerdIES**. Es
 
 ### ✅ **Configuración de materiales**  
 - El archivo `info_centro_acopio.py` permite modificar y definir los materiales aceptados en el centro de acopio.  
-- La configuración es dinámica, por lo que puedes agregar o eliminar materiales fácilmente.  
+- La configuración es dinámica, por lo que puedes agregar o eliminar materiales fácilmente.
+<img src="https://github.com/CyberMedina/Centros-de-acopio-verdIES/blob/main/media/Materiales%20aceptados.jpg?raw=true" width="400">  
 
 ### 🎯 **Reconocimiento de objetos**  
 - Utiliza **YOLOv5** para detectar objetos en tiempo real mediante la cámara.  
@@ -37,11 +38,23 @@ Prototipo de un centro de acopio inteligente para la aplicación **VerdIES**. Es
 ### 📸 **Clasificación con IA**  
 - Al detectar un objeto durante más de 3 segundos, se captura una foto.  
 - La foto es enviada a la **API de OpenAI** para identificar el tipo de material.  
-- La clasificación se realiza basándose en los materiales configurados en el JSON.  
+- La clasificación se realiza basándose en los materiales configurados en el JSON.
 
 ### 📊 **Registro de materiales**  
 - Los materiales clasificados se suman automáticamente en un registro.  
 - Esto permite llevar un seguimiento de los materiales reciclados.  
+
+
+### Ejemplos de detección
+
+- Tapa plastica
+<img src="https://github.com/CyberMedina/Centros-de-acopio-verdIES/blob/main/media/tapas_plastica.gif?raw=true" width="400">
+
+- Botella plasticas
+<img src="https://github.com/CyberMedina/Centros-de-acopio-verdIES/blob/main/media/botella.gif?raw=true" width="400">
+
+- Bombillo
+<img src="https://github.com/CyberMedina/Centros-de-acopio-verdIES/blob/main/media/bombilla.gif?raw=true" width="400">
 
 ---
 
